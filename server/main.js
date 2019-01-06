@@ -48,6 +48,75 @@ app.get('/discord-bot', async (req, res) => {
     res.send(templates.discordBotDocumentationTemplate(templates.constants));
 });
 
+app.post('/api/shorten', async (req, res) => {
+    let longLink = req.body.longLink;
+    let isWords = req.body.isWords;
+    let hideStatistics = req.body.hideStatistics;
+    let expiryDate = (
+        req.body.expiryDate
+            ? util.getEpochAsDate(req.body.expiryDate)
+            : undefined
+    );
+    let customShortLinkID = (
+        req.body.customShortLinkID
+            ? req.body.customShortLinkID.toLowerCase()
+            : undefined
+    );
+
+    let shortLinkID;
+
+    try {
+        shortLinkID = await shortLinks.create(longLink, {
+            isWords,
+            expiryDate,
+            hideStatistics,
+            customShortLinkID,
+        });
+    } catch (error) {
+        res.status(300).send({ error });
+        return;
+    }
+
+    res.send({ shortLinkID });
+});
+
+app.get('/api/lengthen', async (req, res) => {
+    let shortLinkID = req.query.shortLinkID.toLowerCase();
+
+    let longLink;
+
+    try {
+        longLink = await longLinks.get(shortLinkID);
+    } catch (error) {
+        res.status(300).send({ error });
+        return;
+    }
+
+    res.send({ longLink });
+});
+
+app.get('/api/statistics', async (req, res) => {
+    let shortLinkID = req.query.shortLinkID.toLowerCase();
+
+    let views;
+
+    try {
+        views = await shortLinks.getViews(shortLinkID);
+    } catch (error) {
+        res.status(300).send({ error });
+        return;
+    }
+
+    let convertedViews = views.map((view) => {
+        return {
+            ...view,
+            viewed: util.getDateAsEpoch(view.viewed),
+        };
+    });
+
+    res.send({ views: convertedViews });
+});
+
 app.get(/@.+/, async (req, res) => {
     let shortLinkID = req.path.substring(2).toLowerCase();
 
@@ -131,75 +200,6 @@ app.get(/.+/, async (req, res) => {
     } catch (error) {
         console.error(error);
     }
-});
-
-app.post('/api/shorten', async (req, res) => {
-    let longLink = req.body.longLink;
-    let isWords = req.body.isWords;
-    let hideStatistics = req.body.hideStatistics;
-    let expiryDate = (
-        req.body.expiryDate
-            ? util.getEpochAsDate(req.body.expiryDate)
-            : undefined
-    );
-    let customShortLinkID = (
-        req.body.customShortLinkID
-            ? req.body.customShortLinkID.toLowerCase()
-            : undefined
-    );
-
-    let shortLinkID;
-
-    try {
-        shortLinkID = await shortLinks.create(longLink, {
-            isWords,
-            expiryDate,
-            hideStatistics,
-            customShortLinkID,
-        });
-    } catch (error) {
-        res.status(300).send({ error });
-        return;
-    }
-
-    res.send({ shortLinkID });
-});
-
-app.get('/api/lengthen', async (req, res) => {
-    let shortLinkID = req.query.shortLinkID.toLowerCase();
-
-    let longLink;
-
-    try {
-        longLink = await longLinks.get(shortLinkID);
-    } catch (error) {
-        res.status(300).send({ error });
-        return;
-    }
-
-    res.send({ longLink });
-});
-
-app.get('/api/statistics', async (req, res) => {
-    let shortLinkID = req.query.shortLinkID.toLowerCase();
-
-    let views;
-
-    try {
-        views = await shortLinks.getViews(shortLinkID);
-    } catch (error) {
-        res.status(300).send({ error });
-        return;
-    }
-
-    let convertedViews = views.map((view) => {
-        return {
-            ...view,
-            viewed: util.getDateAsEpoch(view.viewed),
-        };
-    });
-
-    res.send({ views: convertedViews });
 });
 
 let port = process.env.PORT || 8080;
