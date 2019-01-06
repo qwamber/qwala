@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run build && node ./server/main.js",
     "build": "babel ./web/static/js/src/ -d ./web/static/js/dist/",
-    "test": "mocha tests/"
+    "test": "export TZ=\"America/Los_Angeles\" && mocha tests/"
   },
   "author": "Marco Burstein <marco@marco.how>",
   "license": "GPL-3.0-only",
