@@ -1,0 +1,30 @@
+{
+    "extends": "airbnb",
+    "rules": {
+        "indent": ["error", 4],
+        "prefer-const": "off",
+        "max-len": ["error", {
+            "code": 79,
+            "ignoreUrls": true,
+            "ignoreComments": false,
+            "ignoreTrailingComments": false,
+            "ignoreStrings": false,
+            "ignoreRegExpLiterals": true
+        }],
+        "semi": ["error", "always"],
+        "arrow-body-style": ["error", "always"],
+        "yoda": ["error", "never"],
+        "function-paren-newline": "off",
+        "newline-per-chained-call": "off",
+        "prefer-template": "off",
+        "no-plusplus": "off",
+        "no-throw-literal": "off",
+        "prefer-destructuring": "off",
+        "no-use-before-define": "off"
+    },
+    "env": {
+        "browser": true,
+        "node": true,
+        "jquery": true
+    }
+}

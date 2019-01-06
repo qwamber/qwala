@@ -1,0 +1,14 @@
+{
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "targets": "cover 95%, last 2 versions"
+            }
+        ],
+        [
+            "minify"
+        ]
+    ],
+    "comments": false
+}

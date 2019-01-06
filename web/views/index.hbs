@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+    <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{analyticsKey}}"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+
+            gtag('js', new Date());
+            gtag('config', '{{analyticsKey}}');
+        </script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Qwala: Link Shortening Done Right</title>
+        <link rel="stylesheet" href="/static/css/index.css">
+        <link
+            rel="stylesheet"
+            href="https://necolas.github.io/normalize.css/latest/normalize.css"
+        >
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"
+        ></script>
+        <script src="/static/js/dist/config.js" charset="utf-8"></script>
+        <script src="/static/js/dist/index.js" charset="utf-8"></script>
+    </head>
+    <body>
+        <div class="modal" id="advanced-modal">
+            <table>
+                <tr>
+                    <td>
+                        <span class="modal-input-group">
+                            Expiry Date
+                            <select id="expiry-date-select">
+                                <option value="none">None</option>
+                                <option value="week">1 Week</option>
+                                <option value="month">1 Month</option>
+                                <option value="year">1 Year</option>
+                            </select>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="modal-input-group">
+                            Keep Statistics?
+                            <select id="keep-statistics-select">
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="modal-input-group">
+                            Link Type
+                            <select
+                                id="link-type-select"
+                                onchange="onChangeLinkType();"
+                            >
+                                <option value="alphanumeric">Letters and Numbers</option>
+                                <option value="words">Words</option>
+                                <option value="custom">Custom</option>
+                            </select>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="modal-input-group" id="custom-shortlink-input-container">
+                            Custom Shortlink
+                            <br />
+                            qwa.la/
+                            <input
+                                type="text"
+                                placeholder="Custom Link"
+                                id="custom-shortlink-input"
+                            />
+                        </span>
+                    </td>
+                </tr>
+            </table>
+            <button
+                type="button"
+                class="modal-done-button"
+                onclick="onClickModalDone();"
+            >
+                Done
+            </button>
+        </div>
+        <div class="hero">
+            <div class="hero-title-container">
+                <img src="/static/res/koala-logo-white.png" alt="Kevin the Koala">
+                <h1>Qwa.la</h1>
+                <h2>link shortening done right</h2>
+            </div>
+            <br />
+            <div class="hero-input-button-container">
+                <input
+                    id="long-link-input"
+                    type="text"
+                    placeholder="Enter your link…"
+                    oninput="onLongLinkInputChange();"
+                ><!--
+                --><button
+                    id="shorten-button"
+                    type="button"
+                    onclick="onShortenButtonClick();"
+                >
+                    Shorten!
+                </button>
+            </div>
+            <br />
+            <button
+                type="button"
+                onclick="onClickAdvancedOptions();"
+                class="advanced-options-button"
+            >
+                or see Advanced Options
+            </button>
+            <div id="error-message"></div>
+        </div>
+        <div class="content">
+            <div class="statistics">
+                <p class="statistic-links-shortened">
+                    <strong>{{totalLinksCount}}</strong>
+                    <br />
+                    Links Shortened
+                </p>
+                <p class="statistic-clicks">
+                    <strong>{{totalViewCount}}</strong>
+                    <br />
+                    Clicks
+                </p>
+                <p class="statistic-custom-links">
+                    <strong>{{totalCustomLinksCount}}</strong>
+                    <br />
+                    Custom Links
+                </p>
+            </div>
+            <div class="details">
+                <h2 class="detail-header-why">
+                    Why Qwa.la?
+                </h2>
+                <p>
+                    <strong>Qwa.la is a simple, free, powerful link shortener.</strong> It was built
+                    out of a discontent with existing options—some required accounts
+                    for more powerful features, while others featured unnappealing
+                    designs and were unpleasant to use. Qwa.la solves these problems,
+                    making it a great, go-to solution for link shortening. We
+                    also don't put any features behind a pay wall, and there are no ads.
+                </p>
+                <p>
+                    <strong>Qwa.la is open source.</strong> That means its easy for others to
+                    improve Qwa.la. If you have a suggestion, head over to our
+                    <a href="/github">GitHub page</a> and let us know! It’s also
+                    easy for developers to use due to our developer libraries and
+                    API, making Qwa.la better for everyone.
+                </p>
+                <p>
+                    <strong>Qwa.la is useful.</strong> Our service provides an easy way to view
+                    statistics for all of our links for free. We also provide a
+                    mobile app and chatbots so that you can easily create links on
+                    the go, and we have powerful options for customizing links and
+                    making them your own. You can see statistics for a link by
+                    including an <code>@</code> in the short link, like
+                    <code>qwa.la/@y7e6j6</code>.
+                </p>
+                <p>
+                    <strong>So why not?!</strong>
+                </p>
+                <h2 class="detail-header-go">
+                    Qwa.la on the Go
+                </h2>
+                <table class="drawing-label-table">
+                    <tr>
+                        <td class="drawing-label-pair drawing-label-pair-double">
+                            <img src="/static/res/drawings/ios-drawing.png" alt="iOS App">
+                            <br />
+                            iOS App
+                        </td>
+                        <td class="drawing-label-pair drawing-label-pair-double">
+                            <img src="/static/res/drawings/android-drawing.png" alt="Android App">
+                            <br />
+                            Android App
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="drawing-label-pair drawing-label-pair-double">
+                            <img src="/static/res/drawings/telegram-drawing.png" alt="Telegram Bot">
+                            <br />
+                            Telegram Bot
+                        </td>
+                        <td class="drawing-label-pair drawing-label-pair-double">
+                            <img src="/static/res/drawings/discord-drawing.png" alt="Discord Bot" >
+                            <br />
+                            Discord Bot
+                        </td>
+                    </tr>
+                </table>
+                <h2 class="detail-header-developers">
+                    Qwa.la for Developers
+                </h2>
+                <table class="drawing-label-table">
+                    <tr>
+                        <td class="drawing-label-pair drawing-label-pair-triple">
+                            <img src="/static/res/drawings/github-drawing.png" alt="GitHub Repo">
+                            <br />
+                            GitHub Repo
+                        </td>
+                        <td class="drawing-label-pair drawing-label-pair-triple">
+                            <img src="/static/res/drawings/js-library-drawing.png" alt="JS Library">
+                            <br />
+                            JS Library
+                        </td>
+                        <td class="drawing-label-pair drawing-label-pair-triple">
+                            <img src="/static/res/drawings/web-api-drawing.png" alt="Web API">
+                            <br />
+                            Web API
+                        </td>
+                    </tr>
+                </table>
+                <h2 class="final-enjoy-header">
+                    Enjoy Qwa.la!
+                </h2>
+                <span class="final-spacer"></span>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,45 @@
+{
+    "shortLinkAdjectives": [
+        "red", "orange", "yellow", "green", "blue", "purple",
+        "friendly", "smart", "nice", "old", "young", "strong", "big", "small",
+        "tall", "short", "thin", "kind"
+    ],
+    "shortLinkNouns": [
+        "dog", "cat", "fish", "bison", "dolphin", "eagle", "pony", "ape",
+        "monkey", "cow", "duck", "rabbit", "spider", "wolf", "turkey",
+        "lion", "pig", "snake", "shark", "bird", "bear", "fish", "chicken",
+        "horse", "cat", "dog", "koala"
+    ],
+    "shortLinkVerbs": [
+        "walking", "running", "having", "doing", "saying", "going", "getting",
+        "making", "knowing", "thinking", "taking", "seeing", "wanting",
+        "looking", "using", "finding", "giving", "telling", "working",
+        "calling", "trying", "asking", "needing", "feeling", "keeping",
+        "beginning", "talking", "helping", "turning"
+    ],
+    "shortLinkUnambiguousDigits": [
+        "2", "3", "4", "5", "6", "7", "8", "9"
+    ],
+    "shortLinkUnambiguousLetters": [
+        "a", "b", "c", "d", "e", "f", "g", "h", "j", "k", "m", "n", "p", "q",
+        "r", "t", "w", "x", "y", "z"
+    ],
+    "reservedCustomShortLinkIDRegExps": [
+        "^pages$", "^info$", "^information$", "^terms$", "^about$", "^settings$",
+        "^qwala$", "^qwa.la$", "^faq$", "^report$", "^contact$", "^news$", "^static$",
+        "^mobile$", "^ios$", "^android$", "^api$", "^telegram-bot$",
+        "^discord-bot$", "^telegram$", "^discord$", "^repository$", "^github$",
+        "^web-api$", "^js-library$", "^js$",  "^javascript$", "^contact$",
+        "^settings$", "^developer$", "^developers$"
+    ],
+    "reservedLongLinkRegExps": [
+        "^http://qwa.la($|/)", "^https://qwa.la($|/)"
+    ],
+    "customShortLinkIDRegExp": "^[a-zA-Z\\-_0-9]+$",
+    "shortLinkCharactersLength": 6,
+    "protocolRegExp": "^(https://|http://)",
+    "defaultTotalViewCount": 500,
+    "defaultTotalLinksCount": 200,
+    "defaultTotalCustomLinksCount": 100,
+    "analyticsKey": "<put your own Google Analytics Key here>"
+}

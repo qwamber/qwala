@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+    <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{analyticsKey}}"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+
+            gtag('js', new Date());
+            gtag('config', "{{analyticsKey}}");
+        </script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+            integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+            crossorigin="anonymous"
+        >
+        <link
+            rel="stylesheet"
+            href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css"
+        >
+        <script
+            src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"
+        ></script>
+        <script>
+            hljs.initHighlightingOnLoad();
+        </script>
+        <title>Qwala Web API Summary</title>
+    </head>
+    <body class="mx-auto my-5 w-75">
+        <h1 class="my-3">Qwa.la JS Library</h1>
+        <h2>
+            Installation
+        </h2>
+        <p>
+            Qwa.la JS is available on NPM.
+        </p>
+        <pre><code class="lang-bash">$ npm install --save qwala</code></pre>
+        <p>
+            Using the library is as easy as using <code>require('qwala')</code>
+            and calling its methods.
+        </p>
+        <pre><code class="lang-javascript">let qwala = require('qwala');
+
+let short = await qwala.shorten('https://example.com');
+console.log('https://qwa.la/' + short); // https://qwa.la/y7e6j6
+
+let long = await qwala.lengthen('y7e6j6');
+console.log(long); // https://example.com
+
+let views = await qwala.statistics('y7e6j6');
+console.log(views) // [{ ipAddress: '123.456.789', viewed: January 5, 2019 } . . . ]</code></pre>
+        <h2><code>shorten(longLink, options)</code></h2>
+        <p>
+            This function can be used to shorten a URL.
+        </p>
+        <strong class="mb-1 d-block">Parameters</strong>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">name</th>
+                    <th scope="col">type</th>
+                    <th scope="col">required</th>
+                    <th scope="col">description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="text-nowrap">longLink</code></td>
+                    <td>string</td>
+                    <td>yes</td>
+                    <td>
+                        The long link to shorten.
+                    </td>
+                </tr>
+                <tr>
+                    <td><code class="text-nowrap">options.isWords</code></td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>
+                        Whether or not to use words instead of alphanumeric
+                        characters in the short link. If unspecified, alphanumeric
+                        characters will be used. This argument is ignored if a
+                        <code>customShortLinkID</code> is provided.
+                    </td>
+                </tr>
+                <tr>
+                    <td><code class="text-nowrap">options.hideStatistics</code></td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>
+                        Whether or not to hide statistics for this link. If
+                        unspecified, statistics will not be hidden.
+                    </td>
+                </tr>
+                <tr>
+                    <td><code class="text-nowrap">options.expiryDate</code></td>
+                    <td>Date</td>
+                    <td>-</td>
+                    <td>
+                        When this link should expire. If unspecified, the link
+                        will never expire.
+                    </td>
+                </tr>
+                <tr>
+                    <td><code class="text-nowrap">options.customShortLinkID</code></td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>
+                        A custom shortlink ID to use instead of the
+                        automatically generated one. For example, if
+                        you wanted the link <code>qwa.la/example</code>, then
+                        <code>example</code> is your custom ID. Default is no
+                        custom short link.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2><code>lengthen(shortLinkID)</code></h2>
+        <p>
+            This function lengthens a short URL. In other words, it responds
+            with the original URL that was shortened.
+        </p>
+        <strong class="mb-1 d-block">Parameters</strong>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">name</th>
+                    <th scope="col">type</th>
+                    <th scope="col">required</th>
+                    <th scope="col">description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="text-nowrap">shortLinkID</code></td>
+                    <td>string</td>
+                    <td>yes</td>
+                    <td>
+                        The short link ID to lengthen. For example, if you wanted
+                        to lengthen <code>qwa.la/example</code>, you would use
+                        <code>example</code> as the <code>shortLinkID</code>.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2><code>statistics(shortLinkID)</code></h2>
+        <p>
+            This function returns a list of views for a short link ID.
+        </p>
+        <strong class="mb-1 d-block">Parameters</strong>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">name</th>
+                    <th scope="col">type</th>
+                    <th scope="col">required</th>
+                    <th scope="col">description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="text-nowrap">shortLinkID</code></td>
+                    <td>string</td>
+                    <td>yes</td>
+                    <td>
+                        The short link ID to lengthen. For example, if you wanted
+                        to get statistics for <code>qwa.la/example</code>, you would use
+                        <code>example</code> as the <code>shortLinkID</code>.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

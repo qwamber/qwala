@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+    <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{analyticsKey}}"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+
+            gtag('js', new Date());
+            gtag('config', "{{analyticsKey}}");
+        </script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+            integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+            crossorigin="anonymous"
+        >
+        <title>Qwa.la Telegram Bot</title>
+    </head>
+    <body class="mx-auto my-5 w-75">
+        <h1 class="my-3">Qwa.la Telegram Bot</h1>
+        <p>
+            Qwa.la has a Telegram bot in order to make link shortening quick
+            and easy for Telegram users. Here's how it works!
+        </p>
+        <h2>
+            Getting Started
+        </h2>
+        <p>
+            Our bot is listed on Telegram as <code>@QwalaBot</code>. To communicate
+            with QwalaBot, either send the bot a message directly, or add it
+            to a group chat.
+        </p>
+        <p>
+            You can also visit this link in order to chat directly with QwalaBot:
+            <a href="qwa.la/get-telegram-bot">qwa.la/get-telegram-bot</a>.
+        </p>
+        <h2>
+            Usage
+        </h2>
+        <p>
+            Shortening a link with QwalaBot is extremely simple. All you have
+            to do is use the <code>/qwala</code> command. For example, if you
+            wanted to shorten <code>example.com</code>, you would send the
+            message <code>/qwala example.com</code>.
+        </p>
+        <p>
+            Note, your message doesn't have to just be the link itself! QwalaBot
+            can detect links within messages, so <code>/qwala Check out this
+            link! example.com</code> works, and so does using multiple URLs,
+            linke <code>/qwala Check these out! example.com example.org</code>.
+        </p>
+        <p>
+            You can also use the <code>/start</code> and <code>/help</code>
+            commands or mention QwalaBot using <code>@QwalaBot</code>
+            to learn more.
+        </p>
+    </body>
+</html>

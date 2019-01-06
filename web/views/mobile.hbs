@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+    <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{analyticsKey}}"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+
+            gtag('js', new Date());
+            gtag('config', "{{analyticsKey}}");
+        </script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Qwala: Link Shortening Done Right</title>
+        <link rel="stylesheet" href="/static/css/index.css">
+        <link rel="stylesheet" href="/static/css/mobile.css">
+        <link
+            rel="stylesheet"
+            href="https://necolas.github.io/normalize.css/latest/normalize.css"
+        >
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"
+        ></script>
+        <script src="/static/js/dist/config.js" charset="utf-8"></script>
+        <script src="/static/js/dist/index.js" charset="utf-8"></script>
+    </head>
+    <body>
+        <div class="modal" id="advanced-modal">
+            <table>
+                <tr>
+                    <td>
+                        <span class="modal-input-group">
+                            Expiry Date
+                            <select id="expiry-date-select">
+                                <option value="none">None</option>
+                                <option value="week">1 Week</option>
+                                <option value="month">1 Month</option>
+                                <option value="year">1 Year</option>
+                            </select>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="modal-input-group">
+                            Keep Statistics?
+                            <select id="keep-statistics-select">
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="modal-input-group">
+                            Link Type
+                            <select
+                                id="link-type-select"
+                                onchange="onChangeLinkType();"
+                            >
+                                <option value="alphanumeric">Letters and Numbers</option>
+                                <option value="words">Words</option>
+                                <option value="custom">Custom</option>
+                            </select>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="modal-input-group" id="custom-shortlink-input-container">
+                            Custom Shortlink
+                            <br />
+                            qwa.la/
+                            <input
+                                type="text"
+                                placeholder="Custom Link"
+                                id="custom-shortlink-input"
+                            />
+                        </span>
+                    </td>
+                </tr>
+            </table>
+            <button
+                type="button"
+                class="modal-done-button"
+                onclick="onClickModalDone();"
+            >
+                Done
+            </button>
+        </div>
+        <div class="hero">
+            <div class="hero-title-container">
+                <img src="/static/res/koala-logo-white.png" alt="Kevin the Koala">
+                <h1>Qwa.la</h1>
+                <h2>link shortening done right</h2>
+            </div>
+            <br />
+            <div class="hero-input-button-container">
+                <input
+                    id="long-link-input"
+                    type="text"
+                    placeholder="Enter your link…"
+                    oninput="onLongLinkInputChange();"
+                ><!--
+                --><button
+                    id="shorten-button"
+                    type="button"
+                    onclick="onShortenButtonClick();"
+                >
+                    Shorten!
+                </button>
+            </div>
+            <br />
+            <button
+                type="button"
+                onclick="onClickAdvancedOptions();"
+                class="advanced-options-button"
+            >
+                or see Advanced Options
+            </button>
+            <div id="error-message"></div>
+        </div>
+    </body>
+</html>

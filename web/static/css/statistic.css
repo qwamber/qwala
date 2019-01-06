@@ -1,0 +1,38 @@
+.map-container {
+    position: relative;
+}
+
+.chart-container, .map-container {
+    margin: 0px 0px 50px;
+}
+
+.return-header {
+    background:
+        linear-gradient(
+            222.59deg,
+            rgba(85, 255, 122, 0.7) 5.89%,
+            rgba(0, 194, 255, 0.7) 52.1%,
+            rgba(172, 89, 255, 0.7) 98.85%
+        ),
+        url(/static/res/hero-photo.jpeg) center center,
+        #000000
+        no-repeat center center fixed;
+    background-size: cover;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: Mont;
+    display: inline-block;
+    margin: 20px 0px 0px 20px;
+    font-size: 3rem;
+    letter-spacing: -0.03em;
+}
+
+.download-link {
+    display: block;
+    text-decoration: underline;
+    margin: 100px 0px 0px;
+}
+
+h2 a {
+    font-family: SpaceMono;
+}

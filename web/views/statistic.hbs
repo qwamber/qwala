@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+    <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{analyticsKey}}"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+
+            gtag('js', new Date());
+            gtag('config', "{{analyticsKey}}");
+        </script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Qwala Statistics for {{url}}</title>
+        <link rel="stylesheet" href="/static/css/index.css">
+        <link rel="stylesheet" href="/static/css/statistic.css">
+        <link
+            rel="stylesheet"
+            href="https://necolas.github.io/normalize.css/latest/normalize.css"
+        >
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"
+        ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+        <script src="https://datamaps.github.io/scripts/0.4.4/datamaps.all.min.js"></script>
+        <script src="/static/js/dist/config.js" charset="utf-8"></script>
+        <script src="/static/js/dist/statistic.js" charset="utf-8"></script>
+    </head>
+    <body onload="loadLinkStatistics();">
+        <h1 class="return-header"><a href="/">Qwa.la</a></h1>
+        <div class="content">
+            <div class="details">
+                <h2>
+                    Statistics for <a href="http://{{url}}">{{url}}</a>
+                </h2>
+                <h3>
+                    Views over a Week
+                </h3>
+                <div
+                    class="chart-container"
+                    id="week-chart-container"
+                    data-labels={{weeklyStatistics.labels}}
+                    data-data={{weeklyStatistics.data}}
+                >
+                    <canvas id="week-chart" width="300" height="300"></canvas>
+                </div>
+                <h3>
+                    Views over a Month
+                </h3>
+                <div
+                    class="chart-container"
+                    id="month-chart-container"
+                    data-labels={{monthlyStatistics.labels}}
+                    data-data={{monthlyStatistics.data}}
+                >
+                    <canvas id="month-chart" width="300" height="300"></canvas>
+                </div>
+                <h3>
+                    Views over All Time
+                </h3>
+                <div
+                    class="chart-container"
+                    id="all-time-chart-container"
+                    data-labels={{allTimeStatistics.labels}}
+                    data-data={{allTimeStatistics.data}}
+                >
+                    <canvas id="all-time-chart" width="300" height="300"></canvas>
+                </div>
+                <h3>
+                    Views by Location
+                </h3>
+                <div
+                    class="map-container"
+                    id="all-time-map-container"
+                    data-points={{allTimeMap.points}}
+                ></div>
+                <a class="download-link" href="http://{{downloadURL}}">
+                    Download full statistics
+                </a>
+                <span class="final-spacer"></span>
+            </div>
+        </div>
+    </body>
+</html>

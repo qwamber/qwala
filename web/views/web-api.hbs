@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+    <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{analyticsKey}}"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+
+            gtag('js', new Date());
+            gtag('config', "{{analyticsKey}}");
+        </script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+            integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+            crossorigin="anonymous"
+        >
+        <title>Qwa.la Web API Summary</title>
+    </head>
+    <body class="mx-auto my-5 w-75">
+        <h1 class="my-3">Qwa.la Web API</h1>
+        <h2>post <code>/api/shorten</code></h2>
+        <p>
+            This endpoint can be used to shorten a URL.
+        </p>
+        <strong class="mb-1 d-block">JSON Body Arguments</strong>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">name</th>
+                    <th scope="col">type</th>
+                    <th scope="col">required</th>
+                    <th scope="col">description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="text-nowrap">longLink</code></td>
+                    <td>string</td>
+                    <td>yes</td>
+                    <td>
+                        The long link to shorten.
+                    </td>
+                </tr>
+                <tr>
+                    <td><code class="text-nowrap">options.isWords</code></td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>
+                        Whether or not to use words instead of alphanumeric
+                        characters in the short link. If unspecified, alphanumeric
+                        characters will be used. This argument is ignored if a
+                        <code>customShortLinkID</code> is provided.
+                    </td>
+                </tr>
+                <tr>
+                    <td><code class="text-nowrap">options.hideStatistics</code></td>
+                    <td>boolean</td>
+                    <td>-</td>
+                    <td>
+                        Whether or not to hide statistics for this link. If
+                        unspecified, statistics will not be hidden.
+                    </td>
+                </tr>
+                <tr>
+                    <td><code class="text-nowrap">options.expiryDate</code></td>
+                    <td>number</td>
+                    <td>-</td>
+                    <td>
+                        When this link should expire, in Unix time. If
+                        unspecified, the link will never expire.
+                    </td>
+                </tr>
+                <tr>
+                    <td><code class="text-nowrap">options.customShortLinkID</code></td>
+                    <td>string</td>
+                    <td>-</td>
+                    <td>
+                        A custom shortlink ID to use instead of the
+                        automatically generated one. For example, if
+                        you wanted the link <code>qwa.la/example</code>, then
+                        <code>example</code> is your custom ID. Default is no
+                        custom short link.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <strong class="mb-1 d-block">Example Success Response</strong>
+        <pre><code>{
+    shortLinkID: "a1b2c3"
+}</code></pre>
+        <strong class="mb-1 d-block">Example Failure Response</strong>
+        <pre><code>{
+    error: "Only letters, numbers, underscores, and
+            hyphens can be used in the custom shortlink."
+}</code></pre>
+
+        <h2>get <code>/api/lengthen</code></h2>
+        <p>
+            This endpoint lengthens a short URL. In other words, it responds
+            with the original URL that was shortened.
+        </p>
+        <strong class="mb-1 d-block">Query Parameters</strong>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">name</th>
+                    <th scope="col">type</th>
+                    <th scope="col">required</th>
+                    <th scope="col">description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="text-nowrap">shortLinkID</code></td>
+                    <td>string</td>
+                    <td>yes</td>
+                    <td>
+                        The short link ID to lengthen. For example, if you wanted
+                        to lengthen <code>qwa.la/example</code>, you would use
+                        <code>example</code> as the <code>shortLinkID</code>.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <strong class="mb-1 d-block">Example Success Response</strong>
+        <pre><code>{
+    longLink: "http://github.com/qwamber/qwala"
+}</code></pre>
+        <strong class="mb-1 d-block">Example Failure Response</strong>
+        <pre><code>{
+    error: "That short link does not exist or has expired."
+}</code></pre>
+
+        <h2>get <code>/api/statistics</code></h2>
+        <p>
+            This endpoints responds with the list of views for a short link ID.
+        </p>
+        <strong class="mb-1 d-block">Query Parameters</strong>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">name</th>
+                    <th scope="col">type</th>
+                    <th scope="col">required</th>
+                    <th scope="col">description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code class="text-nowrap">shortLinkID</code></td>
+                    <td>string</td>
+                    <td>yes</td>
+                    <td>
+                        The short link ID to lengthen. For example, if you wanted
+                        to get statistics for <code>qwa.la/example</code>, you would use
+                        <code>example</code> as the <code>shortLinkID</code>.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <strong class="mb-1 d-block">Example Success Response</strong>
+        <pre><code>{
+    views: [
+        {
+            ipAddress: '123.123.123.123',
+            viewed: 1546490945
+        },
+        {
+            ipAddress: '456.456.456.456',
+            viewed: 1483418934
+        },
+        {
+            ipAddress: '789.789.789.789',
+            viewed: 1514954934
+        },
+    ]
+}</code></pre>
+        <strong class="mb-1 d-block">Example Failure Response</strong>
+        <pre><code>{
+    error: "That short link does not exist or has expired."
+}</code></pre>
+    </body>
+</html>
