@@ -1,6 +1,14 @@
-<a href="https://qwa.la"><img src="./web/static/res/readme-header.png" width="50%" style="display: block; margin: 40px auto 20px;"/></a>
+<p align="center">
+    <a href="https://qwa.la">
+        <img src="./web/static/res/readme-header.png" width="40%"/>
+    </a>
+</p>
 
-<div style="text-align: center; margin: 20px 0px 30px">![Travis CI Build](https://img.shields.io/travis/qwamber/qwala.svg) ![GPL 3](https://img.shields.io/badge/License-GPL%203-blue.svg) ![Pull Requests welcome!](https://img.shields.io/badge/PRs-welcome!-yellow.svg)</div>
+<p align="center">
+    <img src="https://img.shields.io/travis/qwamber/qwala.svg" />
+    <img src="https://img.shields.io/badge/License-GPL%203-blue.svg" />
+    <img src="https://img.shields.io/badge/PRs-welcome!-yellow.svg" />
+</p>
 
 **Qwa.la is a simple, free, powerful link shortener.** It was built out of a
 discontent with existing options—some required accounts for more powerful
