@@ -5,9 +5,15 @@
 </p>
 
 <p align="center">
-    <img src="https://img.shields.io/travis/qwamber/qwala.svg" />
-    <img src="https://img.shields.io/badge/License-GPL%203-blue.svg" />
-    <img src="https://img.shields.io/badge/PRs-welcome!-yellow.svg" />
+    <a href="https://travis-ci.org/qwamber/qwala">
+        <img src="https://img.shields.io/travis/qwamber/qwala.svg" />
+    </a>
+    <a href="https://github.com/qwamber/qwala/blob/master/LICENSE">
+        <img src="https://img.shields.io/badge/License-GPL%203-blue.svg" />
+    </a>
+    <a href="https://github.com/qwamber/qwala/pulls">
+        <img src="https://img.shields.io/badge/PRs-welcome!-yellow.svg" />
+    </a>
 </p>
 
 **Qwa.la is a simple, free, powerful link shortener.** It was built out of a
