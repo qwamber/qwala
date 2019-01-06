@@ -11,6 +11,7 @@ module.exports.mockDatabaseDoc = function mockDatabaseDocAndData(doc, data) {
                     }),
                 }),
             }),
+            runTransaction: () => {},
         }),
     });
 };
@@ -31,6 +32,7 @@ module.exports.mockDatabaseDocGetSet = function mockDatabaseDocGetAndSetMethod(
                     set,
                 }),
             }),
+            runTransaction: () => {},
         }),
     });
 };
@@ -75,6 +77,7 @@ module.exports.mockDatabaseSubGet = function mockDatabaseSubcollectionGet(
                     runTransaction: () => {},
                 }),
             }),
+            runTransaction: () => {},
         }),
     });
 };

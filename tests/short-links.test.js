@@ -5,6 +5,7 @@ let util = require('./test-util.js')
 describe('short-links', () => {
     describe('create', () => {
         it('should fail if it is not a vailid link', async () => {
+            util.mockDatabaseDoc();
             let shortLinks = util.require('../server/short-links.js');
 
             await assert.rejects(
@@ -14,6 +15,7 @@ describe('short-links', () => {
         });
 
         it('should fail if the custom link is invalid', async () => {
+            util.mockDatabaseDoc();
             let shortLinks = util.require('../server/short-links.js');
 
             await assert.rejects(
@@ -26,6 +28,7 @@ describe('short-links', () => {
         });
 
         it('should fail if the custom link is empty', async () => {
+            util.mockDatabaseDoc();
             let shortLinks = util.require('../server/short-links.js');
 
             await assert.rejects(
@@ -39,6 +42,7 @@ describe('short-links', () => {
 
         it('should fail if the custom link is taken', async () => {
             util.mockDatabaseDoc({ exists: true });
+            mock('../server/total-statistics.js', { addLinkCount: () => {} });
 
             let shortLinks = util.require('../server/short-links.js');
 
@@ -60,6 +64,7 @@ describe('short-links', () => {
                     assert.strictEqual(data.viewCount, 0);
                 },
             );
+            mock('../server/total-statistics.js', { addLinkCount: () => {} });
 
             let shortLinks = util.require('../server/short-links.js');
 
@@ -80,6 +85,10 @@ describe('short-links', () => {
                         assert.strictEqual(data.viewCount, 0);
                     },
                 );
+                mock('../server/total-statistics.js', {
+                    addLinkCount: () => {},
+                    addCustomLinkCount: () => {},
+                });
 
                 let shortLinks = util.require('../server/short-links.js');
 
