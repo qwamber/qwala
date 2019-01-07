@@ -46,6 +46,7 @@ Once you have your configuration setup, you should be able to do a simple
 
 ```bash
 npm install
+npm run build
 npm start
 ```
 
