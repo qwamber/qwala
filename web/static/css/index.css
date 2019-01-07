@@ -88,12 +88,6 @@ body {
     display: inline-block;
 }
 
-@media only screen and (max-width: 940px) {
-    .hero-input-button-container {
-        width: 85vw;
-    }
-}
-
 .hero-input-button-container input {
     width: calc(100% - 6.6rem);
     height: 100%;
@@ -377,9 +371,9 @@ tr td:first-of-type .modal-input-group {
     background: linear-gradient(180deg, #26A74A 0%, #1CE277 100%);
 }
 
-@media only screen and (max-width: 400px) {
-    html {
-        font-size: 10px;
+@media only screen and (max-width: 700px) {
+    .hero-input-button-container {
+        width: 91.42%;
     }
 
     .modal {
@@ -389,6 +383,12 @@ tr td:first-of-type .modal-input-group {
 
     tr td:first-of-type .modal-input-group {
         margin-right: 1.3rem;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    html {
+        font-size: 10px;
     }
 
     .hero-input-button-container input {
