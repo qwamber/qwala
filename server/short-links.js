@@ -199,7 +199,7 @@ let validateCustom = async function validateCustomShortLinkID(
         i++
     ) {
         if (
-            new RegExp(settings.reservedCustomShortLinkIDRegExps[i])
+            new RegExp(settings.reservedCustomShortLinkIDRegExps[i], 'i')
                 .test(customShortLinkID)
         ) {
             throw 'That custom short link is unavailable.';
@@ -246,7 +246,10 @@ let validateLongLink = function validateAndFixLongLink(longLink) {
     }
 
     for (let i = 0; i < settings.reservedLongLinkRegExps.length; i++) {
-        let reservedRegExp = new RegExp(settings.reservedLongLinkRegExps[i]);
+        let reservedRegExp = new RegExp(
+            settings.reservedLongLinkRegExps[i],
+            'i',
+        );
         if (reservedRegExp.test(fixedLongLink)) {
             throw 'That long link cannot be shortened.';
         }
