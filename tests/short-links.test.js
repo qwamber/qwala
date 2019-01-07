@@ -58,7 +58,6 @@ describe('short-links', () => {
         it('should add the correct data to the database', async () => {
             util.mockDatabaseDocGetSet(
                 { exists: false },
-                undefined,
                 (data) => {
                     assert.strictEqual(data.longLink, 'http://example.com');
                     assert.strictEqual(data.viewCount, 0);
@@ -76,7 +75,6 @@ describe('short-links', () => {
             async () => {
                 util.mockDatabaseDocGetSet(
                     { exists: false },
-                    undefined,
                     (data) => {
                         assert.strictEqual(
                             data.longLink,
@@ -103,7 +101,6 @@ describe('short-links', () => {
             async () => {
                 util.mockDatabaseDocGetSet(
                     { exists: false },
-                    undefined,
                     (data) => {
                         assert.strictEqual(
                             data.longLink,
@@ -137,7 +134,6 @@ describe('short-links', () => {
             async () => {
                 util.mockDatabaseDocGetSet(
                     { exists: false },
-                    undefined,
                     (data) => {
                         assert.strictEqual(
                             data.longLink,
@@ -160,6 +156,90 @@ describe('short-links', () => {
                 });
             }
         );
+
+        it('should fail if the long link is reserved', async () => {
+            mock('../server/config/settings.json', {
+                reservedLongLinkRegExps: ['^example.com$']
+            });
+
+            let shortLinks = util.require('../server/short-links.js');
+
+            await assert.rejects(
+                shortLinks.create('example.com'),
+                /^That long link cannot be shortened\.$/,
+            );
+        });
+
+        it('should fail if the custom short link is reserved', async () => {
+            mock('../server/config/settings.json', {
+                reservedLongLinkRegExps: [],
+                reservedCustomShortLinkIDRegExps: ['^exampleCustom$']
+            });
+
+            let shortLinks = util.require('../server/short-links.js');
+
+            await assert.rejects(
+                shortLinks.create('example.com', {
+                    customShortLinkID: 'exampleCustom'
+                }),
+                /^That custom short link is unavailable\.$/,
+            );
+        });
+
+        it('should retry if the shortlink is taken', async () => {
+            mock('../server/database.js', {
+                get: () => ({
+                    collection: () => ({
+                        doc: (name) => ({
+                            get: () => {
+                                if (name === 'example-untaken') {
+                                    return { exists: false };
+                                }
+
+                                return { exists: true };
+                            },
+                            set: () => {
+                                assert.equal(name, 'example-untaken');
+                            },
+                        })
+                    })
+                })
+            });
+
+            let hasTriedOnce = false;
+            mock('../server/util.js', {
+                getRandomCharacters: () => {
+                    if (hasTriedOnce) {
+                        return 'example-untaken';
+                    }
+
+                    hasTriedOnce = true;
+                    return 'example-taken';
+                }
+            });
+
+            let shortLinks = util.require('../server/short-links.js');
+            let shortLinkID = await shortLinks.create('example.com', {});
+            assert.equal(shortLinkID, 'example-untaken');
+        });
+
+        it('should throw "unexpected" if the database fails', async () => {
+            util.mockDatabaseFail('Example error');
+
+            let shortLinks = util.require('../server/short-links.js');
+            await assert.rejects(
+                shortLinks.create('example.com', {}),
+                /^An unexpected error occurred when shortening the link\.$/
+            );
+
+            util.mockDatabaseSetFail({ exists: false}, 'Example error');
+
+            shortLinks = util.require('../server/short-links.js');
+            await assert.rejects(
+                shortLinks.create('example.com', {}),
+                /^An unexpected error occurred when saving the shortlink\.$/
+            );
+        });
     });
 
     describe('addView', () => {
@@ -171,6 +251,16 @@ describe('short-links', () => {
             let shortLinks = util.require('../server/short-links.js');
 
             await shortLinks.addView('example', 'abc');
+        });
+
+        it('should throw "unexpected" if the database fails', async () => {
+            util.mockDatabaseSubFail('Example doc error');
+
+            let shortLinks = util.require('../server/short-links.js');
+            await assert.rejects(
+                shortLinks.addView('example'),
+                /^An unexpected error occurred when updating the statistics\.$/
+            );
         });
     });
 
@@ -231,8 +321,84 @@ describe('short-links', () => {
                 /^Statistics are unavailable for that link\.$/,
             )
         });
+
+        it('should return an empty array if there are no views', async () => {
+            util.mockDatabaseSubGet(
+                { exists: true },
+                { hideStatistics: false },
+                { empty: true },
+                []
+            );
+
+            let shortLinks = util.require('../server/short-links.js');
+
+            let views = await shortLinks.getViews('example', 'abc');
+            assert.equal(views.length, 0);
+        });
+
+        it('should throw "unexpected" if the database fails', async () => {
+            util.mockDatabaseFail('Example doc error');
+
+            let shortLinks = util.require('../server/short-links.js');
+            await assert.rejects(
+                shortLinks.getViews('example'),
+                /^An unexpected error occurred when getting the statistics\.$/
+            );
+
+            util.mockDatabaseSubFail('Example collection error');
+
+            shortLinks = util.require('../server/short-links.js');
+            await assert.rejects(
+                shortLinks.getViews('example'),
+                /^An unexpected error occurred when getting the statistics\.$/
+            );
+        });
+
+        it('should fail if the statistics do not exist', async () => {
+            util.mockDatabaseDoc({ exists: false });
+            let shortLinks = util.require('../server/short-links.js');
+
+            await assert.rejects(
+                shortLinks.getViews('example'),
+                /^Statistics are unavailable for that link\.$/
+            );
+        });
     });
 
+    describe('getCreationDate', () => {
+        it('should return the correct creation date', async () => {
+            let creationDate = new Date('January 1, 2000');
+            util.mockDatabaseDoc(
+                { exists: true },
+                { created: util.getMockTimestamp(creationDate) },
+            );
+
+            let shortLinks = util.require('../server/short-links.js');
+
+            let returnedCreationDate = await shortLinks.getCreationDate('examle');
+            assert.equal(returnedCreationDate, creationDate);
+        });
+
+        it('should fail if the shortlink does not exist', async () => {
+            util.mockDatabaseDoc({ exists: false });
+            let shortLinks = util.require('../server/short-links.js');
+
+            assert.rejects(
+                shortLinks.getCreationDate('example'),
+                /^That short link does not exist\.$/,
+            );
+        });
+
+        it('should throw "unexpected" if the database fails', async () => {
+            util.mockDatabaseFail('Example error');
+            let shortLinks = util.require('../server/short-links.js');
+
+            await assert.rejects(
+                shortLinks.getCreationDate('example'),
+                /^An unexpected error occurred when getting the statistics\.$/
+            );
+        });
+    });
     after(() => {
         util.end();
     });

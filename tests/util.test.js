@@ -1,4 +1,5 @@
 let assert = require('assert');
+let mock = require('mock-require');
 let util = require('./test-util.js')
 
 describe('short-links', () => {
@@ -39,10 +40,26 @@ describe('short-links', () => {
 
     describe('getRandomWords', () => {
         it('should match a regular expression', async () => {
-            let utilModule = util.require('../server/util.js');
-            let randomWords = utilModule.getRandomWords();
-            assert(/^([a-z]+\-){2}[a-z]+$/.test(randomWords));
+            for (let i = 0; i < 3; i++) {
+                let originalLodash = require('lodash');
+
+                mock('lodash', {
+                    random: () => i,
+                    sample: originalLodash.sample,
+                });
+
+                let utilModule = util.require('../server/util.js');
+                let randomWords = utilModule.getRandomWords();
+                assert(/^([a-z]+\-){2}[a-z]+$/.test(randomWords));
+            }
         });
+    });
+
+    describe('printMemory', () => {
+        it('should not fail', () => {
+            let utilModule = util.require('../server/util.js');
+            assert.doesNotThrow(utilModule.printMemory);
+        })
     });
 
     after(() => {

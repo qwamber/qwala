@@ -45,6 +45,16 @@ describe('long-links', () => {
                 'example.com',
             );
         });
+
+        it('should throw "unexpected" if the database fails', async () => {
+            util.mockDatabaseFail('Example error');
+
+            let longLinks = util.require('../server/long-links.js');
+            await assert.rejects(
+                longLinks.get('example'),
+                /^An unexpected error occurred when finding the short link\.$/
+            );
+        });
     });
 
     after(() => {

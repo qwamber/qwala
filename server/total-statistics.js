@@ -33,6 +33,14 @@ module.exports.addView = async function addToTotalViews(
 
     await db.runTransaction(async (transaction) => {
         let doc = await transaction.get(totalViewsRef);
+
+        if (!doc.exists) {
+            transaction.set(totalViewsRef, {
+                totalViewCount: 1,
+            });
+            return;
+        }
+
         transaction.update(totalViewsRef, {
             totalViewCount: (doc.data().totalViewCount || 0) + 1,
         });

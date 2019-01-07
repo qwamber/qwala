@@ -39,7 +39,7 @@ module.exports.create = async function createShortLink(longLink, options) {
         doc = await docRef.get();
     } catch (error) {
         console.error(error);
-        throw 'An unexpected error occurred when shortening the link';
+        throw 'An unexpected error occurred when shortening the link.';
     }
 
     if (!doc.exists) {

@@ -113,6 +113,40 @@ describe('link-statistics', () => {
                 assert.strictEqual(allTimeMap[i].longitude, 100);
             }
         });
+
+        it ('should not fail if no location is found', async () => {
+            mock('iplocation', {
+                default: (ipAddress, providers, callback) => {
+                    callback('Example error');
+                },
+            });
+
+            linkStatistics = util.require('../server/link-statistics.js');
+
+            await assert.doesNotReject(linkStatistics.getEach());
+        });
+
+        it ('should not include an empty point', async () => {
+            mock('iplocation', {
+                default: (ipAddress, providers, callback) => {
+                    if (ipAddress === 'abc' || ipAddress === 'def') {
+                        callback(
+                            undefined,
+                            { latitude: null, longitude: null },
+                        );
+                        return;
+                    }
+
+                    callback(undefined, { latitude: 1, longitude: 2 });
+                },
+            });
+
+            linkStatistics = util.require('../server/link-statistics.js');
+
+            let eachStatistic = await linkStatistics.getEach();
+            let mapPoints = eachStatistic[3]
+            assert.strictEqual(mapPoints.length, 4);
+        });
     });
 
     after(() => {

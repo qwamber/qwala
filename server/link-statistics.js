@@ -162,6 +162,8 @@ let getMapArray = async function getLatitudeLongitudeArray(views) {
                 });
             });
 
+            // `iplocation` returns `null` if the location is unavailable.
+            // See https://git.io/fhG6s.
             if (
                 !lookup
                     || lookup.latitude === null
