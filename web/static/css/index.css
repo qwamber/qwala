@@ -376,9 +376,8 @@ tr td:first-of-type .modal-input-group {
         width: 91.42%;
     }
 
-    .modal {
-        width: 90%;
-        left: calc(5%);
+    tr td:first-of-type .modal-input-group {
+        margin-right: 1rem;
     }
 
     tr td:first-of-type .modal-input-group {
@@ -386,7 +385,18 @@ tr td:first-of-type .modal-input-group {
     }
 }
 
-@media only screen and (max-width: 450px) {
+@media only screen and (max-width: 700px) {
+    html {
+        font-size: 17px;
+    }
+
+    .modal {
+        width: 30rem;
+        left: calc(50% - 15rem);
+    }
+}
+
+@media only screen and (max-width: 560px) {
     html {
         font-size: 10px;
     }
