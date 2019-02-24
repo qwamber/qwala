@@ -28,7 +28,7 @@
         <script src="/static/js/dist/config.js" charset="utf-8"></script>
         <script src="/static/js/dist/index.js" charset="utf-8"></script>
     </head>
-    <body>
+    <body onload="onload();">
         <div class="modal" id="advanced-modal">
             <table>
                 <tr>
@@ -170,29 +170,22 @@
                 <p>
                     <strong>So why not?!</strong>
                 </p>
-                <h2 class="detail-header-go">
+                <h2 class="detail-header-go" style="margin-bottom: 1rem">
                     Qwa.la on the Go
                 </h2>
                 <table class="drawing-label-table">
                     <tr>
-                        <td class="drawing-label-pair drawing-label-pair-double">
+                        <td class="drawing-label-pair drawing-label-pair-triple" id="ios-app-cell-link">
                             <img src="/static/res/drawings/ios-drawing.png" alt="iOS App">
                             <br />
                             iOS App
                         </td>
-                        <td class="drawing-label-pair drawing-label-pair-double">
-                            <img src="/static/res/drawings/android-drawing.png" alt="Android App">
-                            <br />
-                            Android App
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="drawing-label-pair drawing-label-pair-double">
+                        <td class="drawing-label-pair drawing-label-pair-triple" id="telegram-cell-link">
                             <img src="/static/res/drawings/telegram-drawing.png" alt="Telegram Bot">
                             <br />
                             Telegram Bot
                         </td>
-                        <td class="drawing-label-pair drawing-label-pair-double">
+                        <td class="drawing-label-pair drawing-label-pair-triple" id="discord-cell-link">
                             <img src="/static/res/drawings/discord-drawing.png" alt="Discord Bot" >
                             <br />
                             Discord Bot
@@ -204,17 +197,17 @@
                 </h2>
                 <table class="drawing-label-table">
                     <tr>
-                        <td class="drawing-label-pair drawing-label-pair-triple">
+                        <td class="drawing-label-pair drawing-label-pair-triple" id="github-cell-link">
                             <img src="/static/res/drawings/github-drawing.png" alt="GitHub Repo">
                             <br />
                             GitHub Repo
                         </td>
-                        <td class="drawing-label-pair drawing-label-pair-triple">
+                        <td class="drawing-label-pair drawing-label-pair-triple" id="js-cell-link">
                             <img src="/static/res/drawings/js-library-drawing.png" alt="JS Library">
                             <br />
                             JS Library
                         </td>
-                        <td class="drawing-label-pair drawing-label-pair-triple">
+                        <td class="drawing-label-pair drawing-label-pair-triple" id="web-api-cell-link">
                             <img src="/static/res/drawings/web-api-drawing.png" alt="Web API">
                             <br />
                             Web API

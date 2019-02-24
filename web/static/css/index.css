@@ -248,7 +248,13 @@ body {
 
 .drawing-label-pair {
     text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
     margin: 0px;
+}
+
+.drawing-label-pair:hover {
+    transform: scale(1.1);
 }
 
 .drawing-label-pair-double {

@@ -108,3 +108,29 @@ let getCustomID = function getCustomShortLinkIDFromInput() {
 
     return $('#custom-shortlink-input').val();
 };
+
+function onload() {
+    $('#ios-app-cell-link').on('click', () => {
+        window.open('/ios', '_blank');
+    });
+
+    $('#telegram-cell-link').on('click', () => {
+        window.open('/telegram-bot', '_blank');
+    });
+
+    $('#discord-cell-link').on('click', () => {
+        window.open('/discord-bot', '_blank');
+    });
+
+    $('#github-cell-link').on('click', () => {
+        window.open('/github', '_blank');
+    });
+
+    $('#js-cell-link').on('click', () => {
+        window.open('/js-library', '_blank');
+    });
+
+    $('#web-api-cell-link').on('click', () => {
+        window.open('/web-api', '_blank');
+    });
+}
