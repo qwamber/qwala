@@ -18,7 +18,7 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "firebase-admin": "^6.4.0",
-    "handlebars": "^4.0.12",
+    "handlebars": "^4.5.3",
     "iplocation": "^6.0.4",
     "lodash": "^4.17.11",
     "request-ip": "^2.1.3",
