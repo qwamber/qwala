@@ -16,7 +16,7 @@
     "@babel/preset-env": "^7.2.3",
     "babel-preset-minify": "^0.5.0",
     "body-parser": "^1.18.3",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "firebase-admin": "^6.4.0",
     "handlebars": "^4.5.3",
     "iplocation": "^6.0.4",
